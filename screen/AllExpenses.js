@@ -7,7 +7,7 @@ const AllExpenses = () => {
   const expensesCtx = useContext(ExpensesContext);
   return (
     <ExpensesOutput
-      expenses={expensesCtx.expense}
+      expenses={expensesCtx.expenses}
       expensesPeriod="total"
       fallbackText="No registered expenses found!"
     />

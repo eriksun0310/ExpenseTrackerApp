@@ -1,20 +1,38 @@
 import { act, createContext, useReducer } from "react";
 
 const DUMMY_EXPENSES = [
-  
+  {
+    id: "e1",
+    description: "書",
+    amount: 200,
+    date: new Date("2024-05-30"),
+  },
+  {
+    id: "e2",
+    description: "衣服",
+    amount: 500,
+    date: new Date("2024-05-29"),
+  },
+  {
+    id: "e3",
+    description: "襪子",
+    amount: 500,
+    date: new Date("2024-05-19"),
+  },
 ];
 
 export const ExpensesContext = createContext({
-  expense: [],
+  expenses: [],
   addExpense: ({ description, amount, date }) => {},
   deleteExpense: (id) => {},
   updateExpense: (id, { description, amount, date }) => {},
 });
 
 function expensesReducer(state, action) {
+  console.log('state', state)
   switch (action.type) {
     case "ADD":
-      console.log('action.payload', action.payload)
+      console.log("action.payload", action.payload);
       //產生一個唯一的id
       const id = new Date().toString() + Math.random().toString();
       return [{ ...action.payload, id: id }, ...state];
@@ -41,10 +59,10 @@ function expensesReducer(state, action) {
 }
 
 function ExpensesContextProvider({ children }) {
-  const [expenseState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES);
+  const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES);
 
   function addExpense(expenseData) {
-    console.log('expenseData',expenseData)
+    console.log("expenseData", expenseData);
     dispatch({
       type: "ADD",
       payload: expenseData,
@@ -67,9 +85,9 @@ function ExpensesContextProvider({ children }) {
       },
     });
   }
-
+  console.log("expensesState", expensesState);
   const value = {
-    expense: expenseState,
+    expenses: expensesState,
     addExpense: addExpense,
     deleteExpense: deleteExpense,
     updateExpense: updateExpense,
